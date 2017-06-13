@@ -1,0 +1,42 @@
+{
+"stuInfo": [
+		{
+			"name": "Jimmy",
+			"sex": "man",
+			"age": 21,
+			"country": "China"
+		},
+		{
+			"name": "Handy",
+			"sex": "women",
+			"age": 23,
+			"country": "Africa"
+		},
+		{
+			"name": "Tom",
+			"sex": "women",
+			"age": 20,
+			"country": "United Kondom"
+		}
+		],
+"workerInfo":[
+		{
+			"name": "Handy",
+			"sex": "man",
+			"age": 21,
+			"country": "China"
+		},
+		{
+			"name": "Jim",
+			"sex": "man",
+			"age": 23,
+			"country": "Africa"
+		},
+		{
+			"name": "Tony",
+			"sex": "women",
+			"age": 20,
+			"country": "United Kondom"
+		}
+		]
+}

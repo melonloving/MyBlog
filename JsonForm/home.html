@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>InfoList</title>
+		<link rel="stylesheet" href="css/eui.css" />
+		<!--<link rel="stylesheet" href="http://file.40017.cn/quyu/Public/eui/eui.css" />-->
+	</head>
+	<body>
+		<div class="eui-tab" id="tab1"> <!--一定要给你的tab一个id-->
+        	<ul class="eui-tab-btn-list">
+           		<li>学生信息表</li> <!--li标签里面放切换按钮的文案-->
+            	<li>工人信息表</li>
+        	</ul>
+	       <div class="eui-tab-cont-list">
+	           <ul>
+                <li>		
+                	<table class="eui-table eui-table-nowrap" style="width: 40%;margin: 0px;">
+					<thead>
+						<tr>
+							<td>姓名</td>
+							<td>性别</td>
+							<td>年龄</td>
+							<td>国家</td>
+						</tr>
+					</thead>
+					<tbody class="databody-1"></tbody>
+					</table>
+            	</li> 
+            	<li>
+            		<table class="eui-table eui-table-nowrap" style="width: 40%;margin: 0px;">
+					<thead>
+						<tr>
+							<td>姓名</td>
+							<td>性别</td>
+							<td>年龄</td>
+							<td>国家</td>
+						</tr>
+					</thead>
+					<tbody class="databody-2"></tbody>
+					</table>
+            	</li>
+            </ul>  
+	        </div> 
+      </div>
+		<script type="text/javascript" src="js/jQuery.js" ></script>
+		<script type="text/javascript" src="js/eui.js" ></script>
+		<!--<script type="text/javascript" src=" http://file.40017.cn/quyu/Public/eui/eui.js" ></script>-->
+		<script type="text/javascript">
+			$('#tab1').eTab({
+		        tabDirection: 'horizontal', //水平方向的tab切换，该值必须为'horizontal'
+		        tabType: 1,                 //模式1的tab切换，该值必须为1
+		        tabStyle: 1,                //插件提供了两种tab样式，可以填写1或者2
+		        animationType: 1,           //插件提供了两种切换过度动画效果，可以填写1或者2
+		        activeIndex: 1              //设置第几个tab项默认被选中
+         });          
+                   
+          $.ajax({
+          	url:"Info.json",
+          	type:"get",
+          	data:"",
+          	datatype:"json",
+          	success:function(data)
+          	{
+          		if(data)
+          		{
+          			studata=data.stuInfo;
+          			var stustr="";
+          			for(var i in studata)
+          			{
+          				var studeposit=studata[i];
+          				stustr+='<tr><td>'+studeposit.name+'</td><td>'+studeposit.sex+'</td><td>'+studeposit.age+'</td><td>'+studeposit.country+'</td></tr>';
+          			}
+          			$('.databody-1').html(stustr);
+          			workerdata=data.workerInfo;
+          			var workerstr="";
+          			for(var i in workerdata)
+          			{
+          				var wordeposit=workerdata[i];
+          				workerstr+='<tr><td>'+wordeposit.name+'</td><td>'+wordeposit.sex+'</td><td>'+wordeposit.age+'</td><td>'+wordeposit.country+'</td></tr>';
+          			}
+          			$('.databody-2').html(workerstr);
+          		}
+          	},
+          	error:function()
+          	{
+          		alert("服务器好像崩溃了哦~~！或者将项目放到IIS上跑跑");
+          	}
+          });
+          //点击tab1,显示1，点击tab2显示2，放到一个页面
+//        $('#tab1').on('change', function(data) {
+//		        //每次点击切换按钮时都会触发该事件
+//		        //所以在这里面可以写切换时的一些处理
+//             var tarIndex=$('#tab1').find('.eui-tab-btn-active').index();
+//             var con=$('.eui-tab-cont-list');
+//             if(tarIndex==0){ 
+//             alert('现在点击了第一个');
+//             con.html(1);              
+//             }else if(tarIndex==1){ 
+//             alert('现在点击了第二个');
+//             con.html(2);              
+//             }else if(tarIndex==2){ 
+//               alert('现在点击了第三个');
+//             con.html(3);            
+//             }
+//         });
+		</script>
+	</body>
+</html>
