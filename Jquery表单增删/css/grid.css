@@ -1,0 +1,146 @@
+﻿@charset "utf-8";
+/**  
+* @name: 通用布局和模块样式
+* @function: 包含通用布局和模块样式
+* @require: 无  
+* 
+
+/* 通用组件 */
+.panel-heading {
+	padding:10px 0;
+	border-bottom:1px dotted #bebebe;
+}
+.panel-title {
+    float:left;
+	color:#495055;
+	font-weight:bold;
+	font-size:14px;
+    cursor: pointer;
+}
+.panel-body {
+	padding:10px 0;
+}
+
+/** 通用模块及扩展
+* 
+**/
+.form-inline .control-group {
+    float:left;
+    /*display:inline-block;
+    *display:inline;
+    _zoom:1;*/
+    vertical-align:top;
+    padding:10px 0;
+}
+.form-horizontal .control-label {
+    float:left;
+    margin:5px 10px 0 20px;
+    vertical-align:top;
+    text-align:right;
+    color:#707070;
+}
+.form-horizontal .controls {
+    /*display:inline-block;
+    *display:inline;
+    _zoom:1;*/
+    float:left;
+    vertical-align:middle;
+}
+.form-horizontal .checkbox,.form-horizontal .radio {
+    min-height:28px;
+    margin-top:5px;
+}
+.form-inline .help-block,.form-inline .help-inline {
+    font-size:12px;
+    text-align: left;
+}
+.form-inline .help-block {
+    margin-top:5px;
+}
+
+/** 布局样式 **/
+.g-wrapper {
+	background:url(../images/bkg_navbar.png) repeat-x;
+}
+.g-container {
+	width:1240px;
+	margin:0 auto;
+}
+.g-header {
+	height:95px;
+}
+.g-header .logo {
+    padding-left: 25px;
+}
+.g-header .userinfo {
+	padding-top:18px;
+	font-size:12px;
+}
+.navbar {
+    clear:both;
+	padding:0 10px 0 40px;
+}
+/* Nav Tabs */
+.nav-tabs {
+
+}
+.nav-tabs li {
+    position:relative;
+    bottom:-2px;
+	float:left;
+    width: 135px;
+    height:40px;
+    margin-left: -1px;
+    overflow: hidden;
+    background:url(../images/bkg_nav_tabs.png) no-repeat;
+}
+.nav-tabs a {
+	display: block;
+    height: 26px;
+    padding: 14px 0 0 20px;
+	color:#ababab;
+    cursor: default;
+}
+.nav-tabs a:hover {
+    text-decoration:none;
+}
+.nav-tabs .icon-status {
+    visibility: hidden;
+    width: 18px;
+    height: 18px;
+    margin-right: 5px;
+}
+.nav-tabs li.finished,.nav-tabs li.edited {
+    bottom: -2px;
+    background-position: 0 -80px;
+}
+.nav-tabs li.finished a,.nav-tabs li.edited a {
+    cursor: pointer;
+}
+.nav-tabs li.current {
+    bottom: -3px;
+    background-position: 0 -40px;
+}
+.nav-tabs li.current a,.nav-tabs li.finished a,.nav-tabs li.edited a {
+    padding-top:12px;
+    height:28px;
+    color:#4c9fff;
+    font-weight:bold;
+}
+.nav-tabs li.finished a,.nav-tabs li.editing a,.nav-tabs li.current a {
+    padding-left:30px;
+}
+.nav-tabs li.edited .icon-status,.nav-tabs li.current .icon-status {
+    visibility: visible;
+    background: url("../images/icon_edit.png") no-repeat;
+}
+.nav-tabs li.finished .icon-status {
+    visibility: visible;
+    background: url("../images/icon_finished.png") no-repeat;
+}
+/* Preview Tab */
+.nav-tabs .icon-preview {
+    margin-right: 5px;
+}
+
+

@@ -1,0 +1,59 @@
+@charset "utf-8";
+body
+{
+	background-color: #FFFAE8;
+}
+.panel
+{
+	border-radius:9px ;
+	width: 1110px;
+	border: 5px solid #4EB900;
+	min-height: 450px;
+	max-height: 450px;
+	overflow-y:auto;	
+	margin: 0 auto;
+}
+.eui-table 
+{
+	border-left:1px solid #EEEEEE ;
+	border-right:1px solid #EEEEEE ;
+				
+}
+.eui-table thead tr td
+{
+	text-align: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+.eui-table tbody tr td
+{
+	padding: 0px 0px;	
+	font-size: 20px;
+}
+.eui-table tbody tr td input
+{
+	width: 195px;
+	height: 35px;
+}
+.btnlist
+{
+	width: 400px;
+	margin-top: 30px;
+	margin-left: 400px;
+}
+.eui-btn
+{
+	display: inline-block;
+	font-weight: bold;
+	font-size: 20px;
+}
+#resultData
+{
+	border:5px solid red; 
+	width:1110px;
+	height:350px;
+	/*margin-left:400px;*/ 
+	margin-left: 202px;
+	margin-top:10px;
+	overflow-y: auto;
+}

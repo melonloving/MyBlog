@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Jquery练习</title>
+		<link rel="stylesheet" href="css/eui.css" />
+		<link rel="stylesheet" href="css/global.css" />
+		<link rel="stylesheet" href="css/supple.css" />
+	</head>
+	<body>
+		<div><h3>Jquery练习</h3></div>
+		<div class="panel">
+			<table class="eui-table eui-table-nowrap" style="width: 1102px;margin:0 auto;">
+				<thead>
+					<tr>
+						<td>姓名</td>
+						<td>工号</td>
+						<td>工作开始时间</td>
+						<td>工作结束时间</td>
+						<td><button id="addbtn" name="addbtn" type="button"><span class="icon icon-add"></span></button></td>
+					</tr>
+				</thead>
+				<tbody class="tbody">
+					<tr id="rowcount1" class="trclass">
+						<td><input name="Name" type="text" class="eui-input"/></td>
+						<td><input name="WorkID" type="text" class="eui-input"/></td>
+						<td><input name="StartDate" id="startDate" type="text" class="eui-input Wdate" onFocus="WdatePicker({lang:'zh-cn'})"/></td>
+						<td><input name="EndDate" id="endDate" type="text" class="eui-input Wdate" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',lang:'zh-cn'})"/></td>
+						<td style="text-align: center;"><button type="button" name="delbtn" class="btn btn-link"><span class="icon icon-remove"></span></button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="btnlist">
+			<!--<input class="duqu" type="button" value="读取"/>-->
+			<button id="duqu" type="button" class="eui-btn eui-btn-primary">读取</button>
+			<button id="tianjia" type="button" class="eui-btn eui-btn-cancel">添加</button>
+		</div>
+		<div id="resultData"></div>
+	
+		<!--<textarea id="tem" style="display:none">
+			<tr id="{{num}}"><td colspan="5">fasf</td></tr>
+		</textarea>-->
+		<!--代码池模板讨论-->
+		<table id="tem" style="display:none">
+			<tbody>		
+				<tr id="{{rowid}}" class="trclass">
+					<td><input name="Name" type="text" class="eui-input" value=""/></td>
+					<td><input name="WorkID" type="text" class="eui-input" value=""/></td>
+					<td><input name="StartDate" id="startDate" type="text" class="eui-input Wdate" value="" onFocus="WdatePicker({lang:'zh-cn'})"/></td>
+					<td><input name="EndDate" id="endDate" type="text" class="eui-input Wdate" value="" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'startDate\')}',lang:'zh-cn'})"/></td>
+					<td style="text-align: center;"><button type="button" name="delbtn" class="btn btn-link"><span class="icon icon-remove"></span></button></td>
+				</tr>
+			</tbody>			
+		</table>
+		<script type="text/javascript" src="js/jQuery.js" ></script>
+		<!--<script type="text/javascript" src=" http://file.40017.cn/quyu/Public/eui/eui.js"></script>-->
+		<script type="text/javascript" src="js/eui.js" ></script>
+		<script type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+		<script type="text/javascript" src="js/index.js" ></script>
+		<script>
+//动态增加行		
+//赋值不能写在click事件内，否则会始终为2
+			var rowcount=1;	
+			$('#addbtn').click(function(){			
+				rowcount++;
+//取值
+//				var newrow='<tr id="option'+rowcount+'"><td><input name="Name" type="text" class="eui-input"/></td><td><input name="WorkID" type="text" class="eui-input"/></td><td><input name="StartDate" id="startDate" type="text" class="eui-input Wdate" onFocus="WdatePicker({lang:\'zh-cn\'})"/></td><td><input name="EndDate" id="endDate" type="text" class="eui-input Wdate" onFocus="WdatePicker({minDate:\'#F{$dp.$D(\'startDate\')}\',lang:\'zh-cn\'})"/></td><td style="text-align: center;"><button id="delbtn" type="button" name="delbtn" class="btn btn-link" onclick="delrow(this)"><span class="icon icon-remove"></span></button></td></tr>';
+				var newrow=$('#tem').find('tbody').html();
+				newrow=newrow.replace('{{rowid}}','rowcount'+rowcount);
+//				debugger;
+				$('.tbody').append(newrow);
+			});
+//委托
+			$('.tbody').delegate('.btn-link','click',function(){ 
+//这里的this指.btn-link
+			   $(this).parent().parent().remove();
+			});			
+//数据获取
+//[{"Name":"","WorkID":"","StartDate":"","EndDate":""},{"Name":"","WorkID":"","StartDate":"","EndDate":""}]
+			$('#duqu').click(function(){
+				var resultArray=new Array();
+//单纯的字符串形式
+//				$('.tbody').find('.trclass').each(function(){
+//					var trResult="{";
+//					$(this).find('td').each(function(){
+//						var child=$(this).children();
+//						if(child.length>1){}
+//						else
+//						{
+//							switch(child.attr('type'))
+//							{
+//								case"text":
+//								trResult+='"'+child.attr('name')+'"'+':'+'"'+child.val()+'",';
+//								break;
+//							}
+//						}
+//					});
+//字符串截取
+//					trResult = trResult.substring(0, trResult.length - 1);
+//					resultArray.push(trResult+"}");
+//				});
+//				$('#resultData').html(resultArray.join('<br>'));
+
+//json格式代码
+				$('.tbody').find('.trclass').each(function(){
+//trobj是对象
+					var trObj={};
+//index代表该行的第几个单元格,
+//若input里没有name，可以后台自定义属性名，方便后期修改维护
+					$(this).find('td').each(function(index){
+						var child=$(this).children();
+							if(child.attr('type')=='text'){ 
+								var vv=child.val();
+                                 switch(index){ 
+                                 case 0:
+                                  trObj.Name=vv;
+                                 break;
+                                  case 1:
+                                 trObj.WorkID=vv;
+                                 break;
+                                  case 2:
+                                 trObj.StartDate=vv;
+                                 break;
+                                  case 3:
+                                 trObj.EndDate=vv;
+                                 break;
+                                 }
+							}
+					});
+					resultArray.push(trObj);
+				});
+//每行单独显示操作
+//				$('#resultData').html('');
+//               for(var item in resultArray){ 
+//                $('#resultData').append(JSON.stringify(resultArray[item])+'<br>');
+//               }
+//输出结果标准Json格式
+                $('#resultData').html(JSON.stringify(resultArray));				
+			});
+
+//dom获取元素方法在动态添加表格行的时候，因为页面加载时只找到一个click联系的class，
+//所以点击运行JS后，新添加的行事件没有注册上去，要用委托来行。将事件添加给其父类
+//使用onclick可以
+//			$('.btn-link').click(function(tar){
+//查看行数
+                //alert($(tar).parent().parent().index());
+                //console.log(tar);  
+//tar是个形参，类似json数组，包含很多元素，其中tar.target是span元素
+//				$(tar.target).parent().parent().parent().remove();
+//				$(this).parent().parent().remove();
+//			});
+
+//			事件委托的两种方法：e.target和delegate
+//			$('.tbody').click(function(e){ 
+//			  var tar=e.target;
+//			   //tar.className.indexOf('icon-remove')>=0
+//			   if($(tar).hasClass('icon-remove')){ 
+//			     $(tar).parent().parent().parent().remove();	   
+//			   }	
+//			});					
+//			$('.tbody').delegate('.icon-remove','click',function(){ 
+//			    这里的this指.icon-remove
+//			   $(this).parent().parent().parent().remove();
+//			});
+
+//				var newrow=$('#tem').find('tbody').html();
+//				newrow=newrow.replace('{{rowid}}','rowcount'+rowcount);
+//				debugger;
+//				$('.tbody').append(newrow);
+	$('#tianjia').click(function(){
+		$.ajax({
+			type:"get",
+			url:"staff.json",
+			datatype:"json",
+			data:"",
+//			async:true
+			success:function(data)
+			{
+				if(data)
+				{
+					staffdata=data.staff;
+					var staffstr="";
+					//、？？？？？
+					for(var i in staffdata)
+					{
+						var staper=staffdata[i];					
+						staffstr+='<tr class="trclass"><td><input name="Name" type="text" value="'+staper.name+'" class="eui-input"/></td><td><input name="WorkID" type="text" value="'+staper.workID+'" class="eui-input"/></td><td><input name="StartDate" id="startDate" type="text" class="eui-input Wdate" value="'+staper.startDate+'" onFocus="WdatePicker({lang:\'zh-cn\'})"/></td><td><input name="EndDate" id="endDate" type="text" value="'+staper.endDate+'" class="eui-input Wdate" onFocus="WdatePicker({minDate:\'#F{$dp.$D(\'startDate\')}\',lang:\'zh-cn\'})"/></td><td style="text-align: center;"><button type="button" name="delbtn" class="btn btn-link"><span class="icon icon-remove"></span></button></td></tr>';
+					}
+					$('.tbody').html(staffstr);
+				}
+			},
+			error:function()
+			{
+				alert("服务器炸了");
+			}
+		});
+	});
+		</script>
+	</body>
+</html>
